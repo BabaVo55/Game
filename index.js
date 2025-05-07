@@ -95,7 +95,9 @@ function animate(){
     if (keys.a.pressed){
         player.velocity.x = -1;
     } else if (keys.d.pressed){
-        player.velocity.x = 1
+        player.velocity.x = 1;
+    } else {
+        player.velocity.x = 0;
     }
 }
 
@@ -103,11 +105,9 @@ function animate(){
 document.addEventListener('keydown', (e) => {
     switch(e.key){
         case 'd':
-            player.velocity.x = 1
             keys.d.pressed = true;
         break
         case 'a':
-            player.velocity.x = -1
             keys.a.pressed = true;
         break
         case 'w':
@@ -123,11 +123,9 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keyup', (e) => {
     switch(e.key){
         case 'd':
-            player.velocity.x = 0;
             keys.d.pressed = false;
             break
             case 'a':
-            player.velocity.x = 0;
             keys.a.pressed = false;
         break
         case 'w':
