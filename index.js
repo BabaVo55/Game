@@ -6,6 +6,7 @@ const width = canvas.width = 1024;
 const height = canvas.height = 576;
 
 c.fillRect(0, 0, width, height);
+const gravity = .2;
 
 class Sprite {
     constructor({position, velocity, size}){
@@ -23,7 +24,7 @@ class Sprite {
     update() {
         this.draw()
         this.position.y += this.velocity.y
-
+        
         if (this.position.y + this.size.height >= canvas.height){
             //🧠 2. Why not use == instead of >=?
             //✅ Problem with ==:
@@ -33,6 +34,8 @@ class Sprite {
             //So using + velocity.y is a predictive collision check — it helps prevent 
             // the object from going slightly past the floor before stopping, which avoids 
             // visual glitches.
+        }else{
+            this. velocity.y += gravity;
         }
     }
 
@@ -46,7 +49,7 @@ const player = new Sprite(
         },
         velocity: {
            x: 0,
-           y: 10
+           y: 0
         },
         size: {
             width: 50,
@@ -63,7 +66,7 @@ const enemy = new Sprite(
         },
         velocity: {
             x: 0,
-            y: 10 
+            y: 0
         },
         size: {
             width: 50,
@@ -73,7 +76,14 @@ const enemy = new Sprite(
 )
 
 
-
+document.addEventListener('keydown', (e) => {
+    switch(e.key){
+        case 'd':
+            player.velocity.x = 1
+        break
+    }
+    console.log(e.key)
+})
 
 function animate(){
     window.requestAnimationFrame(animate)
