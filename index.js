@@ -23,6 +23,7 @@ class Sprite {
 
     update() {
         this.draw()
+        this.position.x += this.velocity.x
         this.position.y += this.velocity.y
         
         if (this.position.y + this.size.height >= canvas.height){
@@ -75,15 +76,14 @@ const enemy = new Sprite(
     }
 )
 
-
-document.addEventListener('keydown', (e) => {
-    switch(e.key){
-        case 'd':
-            player.velocity.x = 1
-        break
+const keys = {
+    a: {
+        pressed: false
+    },
+    d: {
+        pressed: false
     }
-    console.log(e.key)
-})
+}
 
 function animate(){
     window.requestAnimationFrame(animate)
@@ -91,6 +91,52 @@ function animate(){
     c.fillRect(0,0, canvas.width, canvas.height)
     player.update()
     enemy.update()
+
+    if (keys.a.pressed){
+        player.velocity.x = -1;
+    } else if (keys.d.pressed){
+        player.velocity.x = 1
+    }
 }
+
+
+document.addEventListener('keydown', (e) => {
+    switch(e.key){
+        case 'd':
+            player.velocity.x = 1
+            keys.d.pressed = true;
+        break
+        case 'a':
+            player.velocity.x = -1
+            keys.a.pressed = true;
+        break
+        case 'w':
+            player.velocity.y = -10
+        break
+        case 's':
+            player.velocity.y = 5
+        break
+    }
+    console.log(e.key)
+})
+
+document.addEventListener('keyup', (e) => {
+    switch(e.key){
+        case 'd':
+            player.velocity.x = 0;
+            keys.d.pressed = false;
+            break
+            case 'a':
+            player.velocity.x = 0;
+            keys.a.pressed = false;
+        break
+        case 'w':
+            player.velocity.y = 2;
+        break
+    }
+    console.log(e.key)
+})
+
+
 
 animate();
