@@ -14,6 +14,16 @@ class Sprite {
         this.size = size
         this.velocity = velocity;
         this.lastKey;
+        this.weapon = {
+            x: position.x + size.width,
+            y: position.y,
+            size: {
+                width: 100,
+                height: 20
+            }
+        }
+
+        this.attacking = false
         
     }
 
@@ -22,8 +32,25 @@ class Sprite {
         c.fillRect(this.position.x, this.position.y, this.size.width, this.size.height)
     }
 
+ 
+    attack(){
+        this.isAttacking = true;
+
+        const weaponX = this.position.x + this.size.width
+        const weaponY = this.position.y
+
+        c.fillStyle = 'white';
+        c.fillRect(weaponX, weaponY, this.weapon.size.width, this.weapon.size.height);
+
+        // Optional: Set a timeout to reset attack after a short duration
+        setTimeout(() => {
+            this.isAttacking = false;
+        }, 100);
+    }
+
     update() {
         this.draw()
+        if (this.isAttacking) this.attack();
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
         
@@ -153,6 +180,10 @@ function animate(){
 
 document.addEventListener('keydown', (e) => {
     switch(e.key){
+        case ' ':
+    player.attack();
+    break;
+
         case 'd':
             keys.d.pressed = true;
             player.lastKey = 'd'
