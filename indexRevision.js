@@ -36,7 +36,7 @@ class Sprite {
             // the object from going slightly past the floor before stopping, which avoids 
             // visual glitches.
         }else{
-            this.velocity.y += gravity;
+            this. velocity.y += gravity;
         }
     }
 
@@ -76,37 +76,13 @@ const enemy = new Sprite(
     }
 )
 
-let lastPressed;
-let lastPressedEnemy;
-
 const keys = {
     a: {
         pressed: false
     },
     d: {
         pressed: false
-    },
-    w: {
-        pressed: false
-    },
-    arrowLeft: {
-        pressed: false
-    },
-    arrowRight: {
-        pressed: false
-    },
-    arrowUp: {
-        pressed: false
-    },
-}
-
-function movement(button1, button2, pressed, who){
-    if (keys.button1.pressed && pressed === 'a'){
-        who.velocity.x = -1;
-    } 
-    else if (keys.button2.pressed && pressed === 'd'){
-        who.velocity.x = 1;
-    } 
+    }
 }
 
 function animate(){
@@ -115,10 +91,14 @@ function animate(){
     c.fillRect(0,0, canvas.width, canvas.height)
     player.update()
     enemy.update()
-    
-    player.velocity.x = 0
-    movement(a,)
 
+    if (keys.a.pressed){
+        player.velocity.x = -1;
+    } else if (keys.d.pressed){
+        player.velocity.x = 1;
+    } else {
+        player.velocity.x = 0;
+    }
 }
 
 
@@ -126,29 +106,16 @@ document.addEventListener('keydown', (e) => {
     switch(e.key){
         case 'd':
             keys.d.pressed = true;
-            lastPressed = 'd'
         break
         case 'a':
             keys.a.pressed = true;
-            lastPressed = 'a'
         break
         case 'w':
             player.velocity.y = -10
-            keys.w.pressed = true;
         break
-        case 'arrowRight':
-            keys.arrowRight.pressed = true;
-            lastPressedEnemy = 'arrowRight'
+        case 's':
+            player.velocity.y = 5
         break
-        case 'arrowLeft':
-            keys.arrowLeft.pressed = true;
-            lastPressedEnemy = 'arrowLeft'
-        break
-        case 'arrowUp':
-            enemy.velocity.y = -10
-            keys.arrowUp.pressed = true;
-        break
-
     }
     console.log(e.key)
 })
@@ -157,23 +124,12 @@ document.addEventListener('keyup', (e) => {
     switch(e.key){
         case 'd':
             keys.d.pressed = false;
-        break
-        case 'a':
+            break
+            case 'a':
             keys.a.pressed = false;
         break
         case 'w':
-            player.velocity.y = 2; 
-            keys.w.pressed = false;
-        break
-        case 'arrowRight':
-            keys.arrowRight.pressed = false;
-        break
-        case 'arrowLeft':
-            keys.arrowLeft.pressed = false;
-        break
-        case 'arrowUp':
-            enemy.velocity.y = 2; 
-            keys.arrowUp.pressed = false;
+            player.velocity.y = 2;
         break
     }
     console.log(e.key)
